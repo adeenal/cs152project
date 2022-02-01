@@ -1,37 +1,13 @@
-## Welcome to GitHub Pages
+# Title: Image Captioning
 
-You can use the [editor on GitHub](https://github.com/adeenal/cs152project/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+## Project Description
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+I will focus on training neural networks to automatically generate captions for images. Using a Kaggle data set that comes from Wikipedia, I will create an English-based training data set for the neural network. Since the training data is about 275GB, I will have testing data that are just samples of the training data, as well as possibly have some limitations to filter out some data.
 
-### Markdown
+I will train the neural network on one training data set, cleaning it or using other training data sets as well if needed. The trained neural network will then be "deployed" as an application by running the neural network with the testing data. The longer-term goal is to use the neural network to caption or label any given image.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## Project Goals
 
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/adeenal/cs152project/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+1. Create data sets for training and testing neural networks that creates captions for images
+2. Explore methods for cleaning the training and test data sets
+3. Train a neural network that is able to caption any image
