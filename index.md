@@ -1,5 +1,11 @@
 # Image Captioning
 
+## Team Members
++ Adeena Liang
++ Irmak Bukey
++ Olina Wong
++ Sadie Zhao
+
 ## Project Description
 
 For the purposes of website accessibility, images often need to have corresponding alternative text in order for screen readers to convey that type of content to its users. Currently, much of this alternative text is being generated manually, which is very time-consuming and potentially never-ending work. 
