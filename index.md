@@ -26,17 +26,25 @@ Ultimately, our long-term goal is to use the neural network to caption or label 
 ## Related Works Search
 ### Some Resources
 1. How to Automatically Generate Textual Descriptions for Photographs with Deep Learning
-Brownlee, Jason. “How to Automatically Generate Textual Descriptions for Photographs with Deep Learning.” *Machine Learning Mastery*, 7 Aug. 2019, https://machinelearningmastery.com/how-to-caption-photos-with-deep-learning/. <br>
+Brownlee, Jason. “How to Automatically Generate Textual Descriptions for Photographs with Deep Learning.” *Machine Learning Mastery*, 7 Aug. 2019, https://machinelearningmastery.com/how-to-caption-photos-with-deep-learning/. 
+<br>
 In this post from his blog focused around machine learning, Jason Brownlee, PhD. (AI) provides valuable history around the history of generating text for images and structurally explains the elements of a neural network captioning model. He additionally helpfully cites and links other articles and papers published in the last five years that relate to image caption generators. Brownlee also explains dominant methods prior to end-to-end neural networks and delves into the concept of feature extraction models and language models alongside their applications in the field.
+<br>
 2.  The Complete Beginner’s Guide to Deep Learning: Convolutional Neural Networks and Image Classification
-Bonner, Anne. “The Complete Beginner’s Guide to Deep Learning: Convolutional Neural Networks and Image Classification.” *Medium*, Towards Data Science, 1 June 2019, https://towardsdatascience.com/wtf-is-image-classification-8e78a8235acb. <br>
+Bonner, Anne. “The Complete Beginner’s Guide to Deep Learning: Convolutional Neural Networks and Image Classification.” *Medium*, Towards Data Science, 1 June 2019, https://towardsdatascience.com/wtf-is-image-classification-8e78a8235acb. 
+<br>
 This medium post is the third part of a series on deep learning which highlights convolutional neural networks (CNNs) which represent a breakthrough in image recognition. Bonner writes about the history and architecture of these CNNs and provides relevant examples and reader friendly walkthroughs about how CNNs work. She excellently outlines each feature of an example of convolutional neural networks including photos and code to supplement the technical writing.
+<br>
 6. Image Alt Text Generation Using Image Recognition
-Spiteri, Michaela Tromans-Jones. “Image Alt Text Generation Using Image Recognition.” *GainChanger*, 14 Apr. 2021, https://www.gainchanger.com/image-alt-text-generation/. <br>
+Spiteri, Michaela Tromans-Jones. “Image Alt Text Generation Using Image Recognition.” *GainChanger*, 14 Apr. 2021, https://www.gainchanger.com/image-alt-text-generation/. 
+<br>
 Published in 2021, this blog post is written by Dr Michaela Spiteri BEng, MSc, PhD (AI / Healthcare domain), who is a well-published researcher in the field of AI and machine-learning. She explores the importance of alternate text, including both in the use of screen readers and SEO performance. The post also discusses varying APIs and available solutions for people who wish to generate alternate text for images on their websites.
+<br>
 11. Automatic Image Captioning Based on ResNet50 and LSTM with Soft Attention
-Yan Chu, Xiao Yue, Lei Yu, Mikhailov Sergei, Zhengkui Wang, "Automatic Image Captioning Based on ResNet50 and LSTM with Soft Attention", *Wireless Communications and Mobile Computing*, vol. 2020, Article ID 8909458, 7 pages, 2020. https://doi.org/10.1155/2020/8909458 <br>
-This research article published in 2020 presents a joint model based on ResNet50 and LSTM with soft attention to be used for automatic image captioning. The authors utilize one encoder, adopting ResNet50, and one decoder, designed with LSTM, to create an “extensive representation of the given image” and to “selectively focus the attention over certain parts of an image to predict the next sentence”. Overall, this state-of-the-art model combines CNNs and RNNs for the most effective results in automatic image captioning. <br>
+Yan Chu, Xiao Yue, Lei Yu, Mikhailov Sergei, Zhengkui Wang, "Automatic Image Captioning Based on ResNet50 and LSTM with Soft Attention", *Wireless Communications and Mobile Computing*, vol. 2020, Article ID 8909458, 7 pages, 2020. https://doi.org/10.1155/2020/8909458 
+<br>
+This research article published in 2020 presents a joint model based on ResNet50 and LSTM with soft attention to be used for automatic image captioning. The authors utilize one encoder, adopting ResNet50, and one decoder, designed with LSTM, to create an “extensive representation of the given image” and to “selectively focus the attention over certain parts of an image to predict the next sentence”. Overall, this state-of-the-art model combines CNNs and RNNs for the most effective results in automatic image captioning. 
+<br>
 
 ### Some other Implementations:
 1. [PyTorch](https://github.com/ruotianluo/ImageCaptioning.pytorch) <br>
