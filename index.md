@@ -38,6 +38,7 @@ Ultimately, our long-term goal is to use the neural network to caption or label 
 12. Image Captioning with Compositional Neural Module Networks
 13. Diverse Image Captioning with Context-Object Split Latent Spaces
 
+
 1. How to Automatically Generate Textual Descriptions for Photographs with Deep Learning
 Brownlee, Jason. “How to Automatically Generate Textual Descriptions for Photographs with Deep Learning.” Machine Learning Mastery, 7 Aug. 2019, https://machinelearningmastery.com/how-to-caption-photos-with-deep-learning/. 
 In this post from his blog focused around machine learning, Jason Brownlee, PhD. (AI) provides valuable history around the history of generating text for images and structurally explains the elements of a neural network captioning model. He additionally helpfully cites and links other articles and papers published in the last five years that relate to image caption generators. Brownlee also explains dominant methods prior to end-to-end neural networks and delves into the concept of feature extraction models and language models alongside their applications in the field.
