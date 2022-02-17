@@ -38,9 +38,9 @@ Published in 2021, this blog post is written by Dr Michaela Spiteri BEng, MSc, P
 Yan Chu, Xiao Yue, Lei Yu, Mikhailov Sergei, Zhengkui Wang, "Automatic Image Captioning Based on ResNet50 and LSTM with Soft Attention", Wireless Communications and Mobile Computing, vol. 2020, Article ID 8909458, 7 pages, 2020. https://doi.org/10.1155/2020/8909458 <br>
 This research article published in 2020 presents a joint model based on ResNet50 and LSTM with soft attention to be used for automatic image captioning. The authors utilize one encoder, adopting ResNet50, and one decoder, designed with LSTM, to create an “extensive representation of the given image” and to “selectively focus the attention over certain parts of an image to predict the next sentence”. Overall, this state-of-the-art model combines CNNs and RNNs for the most effective results in automatic image captioning. <br>
 
-Some other Implementations:
-1) PyTorch: https://github.com/ruotianluo/ImageCaptioning.pytorch
-2) TensorFlow: https://github.com/DeepRNN/image_captioning
-3) Torch: https://github.com/karpathy/neuraltalk2
-4) Torch: https://github.com/jcjohnson/densecap
-5)TensorFlow: https://github.com/tensorflow/docs/blob/master/site/en/tutorials/text/image_captioning.ipynb
+### Some other Implementations:
+1. [PyTorch](https://github.com/ruotianluo/ImageCaptioning.pytorch) <br>
+2. [TensorFlow](https://github.com/DeepRNN/image_captioning) <br>
+3. [Torch](https://github.com/karpathy/neuraltalk2) <br>
+4. [Torch](https://github.com/jcjohnson/densecap) <br>
+5. [TensorFlow](https://github.com/tensorflow/docs/blob/master/site/en/tutorials/text/image_captioning.ipynb)
