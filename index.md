@@ -43,6 +43,10 @@ It is important to note that the input traning data are not pair images. Moreove
 
 The main architecture we plan to use in this project is CycleGAN, an approach “for learning to translate an image from a source domain X to a target domain Y in the absence of paired examples” based on traditional Generative Adversarial Networks (GANs). Finally, we will evaluate our results based on the MiFID (Memorization-informed FID) calculated by Kaggle, which is commonly used in recent publications as the standard for evaluation methods of GANs.
 
+## Ethics
+In terms of ethics, there is the question of whether the art should be attributed to the artist of the original image or to the style of the converted art. Consequently, there is also the existing question in research of the validity of art that is created by a robot. We will seek to explore the idea of ownership in the intersection of digital property and technology. There is also the ethical topic of when using the model, the permissibility of using images that are owned by another.
+
+
 
 ## Citations
 1. How to Automatically Generate Textual Descriptions for Photographs with Deep Learning
