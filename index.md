@@ -1,4 +1,4 @@
-# Image Captioning
+# We are all Monets
 
 ## Team Members
 + Adeena Liang
@@ -7,23 +7,19 @@
 + Sadie Zhao
 
 ## Introduction
-For the purposes of website accessibility, images often need to have corresponding alternative text in order for screen readers to convey content in the images to its users. Currently, much of this alternative text is being generated manually, which is very time-consuming and potentially never-ending work. Often known as “automatic image annotation” or “image tagging” the problem of generating textual descriptions for images presents itself as a complex problem for models.
+Writers have their unique prose, musicians have their unique vibe, and no differently, artists have their own unique style that are recognisable in their works throughout their lives. With the development of generative adversarial networks, we can utilise neural networks to imitate any particular style of a specific artist. 
 
-Since the images vary greatly in size, resolution, and content, it is hard to easily generate accurate and descriptive alternative text for them. Recent solutions using advanced computer vision have difficulties with the complex semantics that some of the images have. Image descriptions with text have historically fallen into three variations:
+With this project, we wish to be able to replicate the style of Monet given any image. People have well-studied the typical image-to-image translation problem, where the goal is to learn the mapping between an input image and an output image using a training set of aligned image pairs. However, for many tasks, paired training data will not be available. In this project, for example, we are given monet's paintings as our training data set, while paired training data are unavailable. Thus, we wish to achieve our goal through a recently developed architecture named Cycle-Consistent Adversarial Networks (CycleGANs), which is developed on the base of traditional GANs and aimed at solving unpaired image to image translation problem. 
 
-1. Classification - Where the model assigns an image a class label from known classes
-2. Description - Where the model generates a textual description of the overall image contents
-3. Annotation - Where the model generates descriptions specifically for certain regions on a given image
-
-For this project, we aim to train a neural network falling into the second variation that can overcome these existing challenges of variations and semantics. Using a Kaggle data set that comes from Wikipedia, we will create an English-based training data set for the neural network. Since the training data is about 275GB, we will have testing data that is cleaned and filtered to be able to produce the best results.
 
 ## Project Goals
 
-1. Create data sets for training and testing neural networks that creates captions for images
-2. Explore methods for cleaning the training and test data sets
-3. Train a neural network that is able to caption any image
+1. Explore methods for cleaning the training and test data sets
+2. Learn and understand generative adversarial networks (GANs) and Cycle-Consistent Adversarial Networks (CycleGANs).
+3. Train a neural network that is able to transfer any image to Monet style
+4. Try to improve the performance of the neural network
 
-# Literature Review
+# Literature Review (Need to be updated)
 During our research process, we examined both research articles and existing implementations which relate to our project topic. Similarly, we also investigated academic literature and relevant blog postings to gain stronger understandings of how to implement our project both successfully and effectively.
 
 In a [blog posting](https://machinelearningmastery.com/how-to-caption-photos-with-deep-learning/) focused around machine learning, Jason Brownlee, PhD. (AI) provides valuable history around the history of generating text for images and structurally explains the elements of a neural network captioning model. Brownlee also explains dominant methods prior to end-to-end neural networks and delves into the concept of feature extraction models and language models alongside their applications in the field.
@@ -36,12 +32,17 @@ The article [Image Processing using CNN: A Beginners Guide](https://www.analytic
 
 In terms of generating captions, we turned towards [Automatic Image Captioning Based on ResNet50 and LSTM with Soft Attention](https://www.hindawi.com/journals/wcmc/2020/8909458/), a research article which presents a joint model based on ResNet50 and LSTM with soft attention to be used for automatic image captioning. The authors utilize one encoder, adopting ResNet50, and one decoder, designed with LSTM, to create an “extensive representation of the given image” and to “selectively focus the attention over certain parts of an image to predict the next sentence”. Overall, this state-of-the-art model combines CNNs and RNNs for the most effective results in automatic image captioning.
 
-## Some Other Implementations:
-1. [PyTorch](https://github.com/ruotianluo/ImageCaptioning.pytorch) <br>
-2. [TensorFlow](https://github.com/DeepRNN/image_captioning) <br>
-3. [Torch](https://github.com/karpathy/neuraltalk2) <br>
-4. [Torch](https://github.com/jcjohnson/densecap) <br>
-5. [TensorFlow](https://github.com/tensorflow/docs/blob/master/site/en/tutorials/text/image_captioning.ipynb)
+## Methods
+In this project, we plan to use Tensorflow and base our project on Kaggle notebook. Our dataset, provided by Kaggle, consists of four parts:
+1. monet_jpg - 300 Monet paintings sized 256x256 in JPEG format
+2. monet_tfrec - 300 Monet paintings sized 256x256 in TFRecord format
+3. photo_jpg - 7028 photos sized 256x256 in JPEG format
+4. photo_tfrec - 7028 photos sized 256x256 in TFRecord format
+
+It is important to note that the input traning data are not pair images. Moreover, we would add more photos by ourselves as inputs for tests and for fun, and the outputs would be new Monet-style images based on the original input photos. If time is allowed, we would also possibly experiment with the artistic style of other artists using [the CycleGAN dataset](https://github.com/junyanz/CycleGAN).
+
+The main architecture we plan to use in this project is CycleGAN, an approach “for learning to translate an image from a source domain X to a target domain Y in the absence of paired examples” based on traditional Generative Adversarial Networks (GANs). Finally, we will evaluate our results based on the MiFID (Memorization-informed FID) calculated by Kaggle, which is commonly used in recent publications as the standard for evaluation methods of GANs.
+
 
 ## Citations
 1. How to Automatically Generate Textual Descriptions for Photographs with Deep Learning
