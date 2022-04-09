@@ -56,11 +56,11 @@ The CycleGAN is an extension of the GAN architecture that involves the simultane
 2. Discriminator Model 1:
   * Input: Takes real samples from collection 2 and output from Generator Model 1.
   * Output: Likelihood of a sample is from collection 2.
- Similarly, 
-1. Generator Model 2:
+  
+3. Generator Model 2:
   * Input: Takes input form collection 2.
   * Output: Generates a sample in collection 1.
-2. Discriminator Model 2:
+4. Discriminator Model 2:
   * Input: Takes real samples from collection 1 and output from Generator Model 2.
   * Output: Likelihood of a sample is from collection 1.
 
