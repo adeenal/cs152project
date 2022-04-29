@@ -1,10 +1,10 @@
 # We are all Monets
 
 ## Team Members
++ Sadie Zhao
 + Adeena Liang
 + Irmak Bukey
 + Olina Wong
-+ Sadie Zhao
 
 ## Introduction
 Writers have their unique prose, musicians have their unique vibe, and no differently, artists have their own unique style that are recognisable in their works throughout their lives. With the development of generative adversarial networks, we can utilise neural networks to imitate any particular style of a specific artist. 
@@ -36,13 +36,14 @@ In terms of generating captions, we turned towards [Automatic Image Captioning B
 In this project, we plan to use Tensorflow and base our experiment on both Kaggle notebook (with TPU V3-8 as an accelerator) and Google Colab (with GPU as an accelerator), which allow us to compare and evaluate the runtime performance of our project. 
 
 Our dataset, provided by Kaggle, consists of four parts:
-1. monet_jpg - 300 Monet paintings sized 256x256 in JPEG format
-2. monet_tfrec - 300 Monet paintings sized 256x256 in TFRecord format
-3. photo_jpg - 7028 photos sized 256x256 in JPEG format
-4. photo_tfrec - 7028 photos sized 256x256 in TFRecord format
-5. 
-The monet_tfrec and monet_jpg directories contain the same painting images, and the photo_tfrec and photo_jpg directories contain the same photos. In our experiment, we load and process the data from monet_tfrec and photo_tfrec to create our dataset: we decode the tfrec file to jpeg file, resize all the files to three channel image of size [256, 256, 3], and zip all of them to a dataset. 
-It is important to note that the input training data are not pair images. That is, for each monet image provided, there is no corresponding photo image; and for each real photo image, there is no corresponding monet image. The unpaired nature of our  training data promotes us to employ the Cycle-Consistent Adversarial Networks (CycleGAN). CycleGAN is a recently-developed approach “for learning to translate an image from a source domain X to a target domain Y in the absence of paired examples”. Traditional image-to-image translation solution based on Conditional Adversarial Networks depends on the availability of training examples where the same data is available in both domains. That is, say f:X->Y is a map from a source domain X to a target domain Y. Then, the training sample for Conditional Adversarial Networks based image-to-image translation model should looks like (x,f(x)) pair. However, CycleGAN eliminated the need for a paired image by making a two-step transformation of the source domain image - first by trying to map it to the target domain and then back to the original image. (More details of CycleGAN will be discussed in discussion section)
+1. _monet_jpg_ - 300 Monet paintings sized 256x256 in JPEG format
+2. _monet_tfrec_ - 300 Monet paintings sized 256x256 in TFRecord format
+3. _photo_jpg_ - 7028 photos sized 256x256 in JPEG format
+4. _photo_tfrec_ - 7028 photos sized 256x256 in TFRecord format
+
+The _monet_tfrec_ and _monet_jpg_ directories contain the same painting images, and the _photo_tfrec_ and _photo_jpg_ directories contain the same photos. In our experiment, we load and process the data from _monet_tfrec_ and _photo_tfrec_ to create our dataset: we decode the tfrec file to jpeg file, resize all the files to three channel image of size [256, 256, 3], and zip all of them to a dataset. 
+
+It is important to note that the input training data are not pair images. That is, for each monet image provided, there is no corresponding photo image; and for each real photo image, there is no corresponding monet image. The unpaired nature of our  training data promotes us to employ the Cycle-Consistent Adversarial Networks (CycleGAN). CycleGAN is a recently-developed approach “for learning to translate an image from a source domain X to a target domain Y in the absence of paired examples”. Traditional image-to-image translation solution based on Conditional Adversarial Networks depends on the availability of training examples where the same data is available in both domains. That is, say f: X->Y is a map from a source domain X to a target domain Y. Then, the training sample for Conditional Adversarial Networks based image-to-image translation model should looks like (x, f(x)) pair. However, CycleGAN eliminated the need for a paired image by making a two-step transformation of the source domain image - first by trying to map it to the target domain and then back to the original image. (More details of CycleGAN will be discussed in discussion section)
 
 ## Discussion Outline
 The data we will present will be a series of images in various file sizes that have been converted to “Monet” style images. The model will have been trained on Monet style images, and we will interpret our output prediction images using a specific set of parameters known as MiFID (Memorization-informed Fréchet Inception Distance), which is a modification from Fréchet Inception Distance (FID). We will specifically derive our results by submitting our output images to a evaluation model of MiFID found on Kaggle and analyse the output score to determine accuracy of our model. Our work is similar to other models in that various types of image transformation models exist, such as image filters and image classification. One such example is a project from two semesters ago done by students who attempted to create a General Adversarial Network (GAN) to output a Picasso style artwork. We will also examine how different variants of GANs (like traditional GANs, DCGANs, and CycleGANs) perform and which one would best suit our desired goals. We will prove our claims by showing the accuracy of our models and its visualisations to audiences. On the other hand, we will provide evidence supporting our points regarding the ethical concerns of such models and how they can be combated. 
