@@ -30,6 +30,7 @@ To gain insight on a more general application of conditional adversarial network
 
 
 ## Methods
+### Dataset and Model Brief
 In this project, we plan to use Tensorflow and base our experiment on both Kaggle notebook (with TPU V3-8 as an accelerator) and Google Colab (with GPU as an accelerator), which allow us to compare and evaluate the runtime performance of our project. 
 
 Our dataset, provided by Kaggle, consists of four parts:
@@ -43,8 +44,21 @@ The _monet_tfrec_ and _monet_jpg_ directories contain the same painting images, 
 It is important to note that the input training data are not pair images. That is, for each monet image provided, there is no corresponding photo image; and for each real photo image, there is no corresponding monet image. The unpaired nature of our  training data promotes us to employ the Cycle-Consistent Adversarial Networks (CycleGAN). CycleGAN is a recently-developed approach “for learning to translate an image from a source domain X to a target domain Y in the absence of paired examples”. Traditional image-to-image translation solution based on Conditional Adversarial Networks depends on the availability of training examples where the same data is available in both domains. That is, say f: X->Y is a map from a source domain X to a target domain Y. Then, the training sample for Conditional Adversarial Networks based image-to-image translation model should looks like (x, f(x)) pair. However, CycleGAN eliminated the need for a paired image by making a two-step transformation of the source domain image - first by trying to map it to the target domain and then back to the original image. (More details of CycleGAN will be discussed in discussion section)
 ![paired_image_input](img/unpaired_img_translation.jfif)
 Besides the dataset provided by Kaggle, we would possibly add more photos by ourselves as inputs for tests and for fun. 
+
 After the CycleGAN model is trained for 50 epochs, we use the trained model to make predictions: for each photo in the photo dataset, we take it as an input and output a Monet version of that photo. 
 
+### Loss Functions
+- For the **generator_loss**, we use the _BinaryCrossentropy_ as their loss function. _BinaryCrossentropy_ is a typical loss function that computes the cross-entropy loss between true labels and predicted labels. **generator_loss** is based on the results from corresponding discriminator. 
+- For the **discriminator_loss**, we first compute the loss of real inputs and then compute the loss of generated input, both using the _BinaryCrossentropy_. This discriminator loss is the average of the real and generated loss.
+- We also defined the **cycle consistency loss** which measures if original photo and the twice transformed photo to be similar to one another. That is, for example, take a real_monet image, put it into a photo_generator to generate a fake_photo, and put this fake_photo into a monet_generator to produce a fake_monet. The **cycle consistency loss** meassures the difference between real_monet and fake_monet.
+- Finally, we defined the **identity loss** which compares the image with its generator. That is, for example, take a real_monet image, put it into a monet_generator, and compare the real_monet with the generated fake_monet.
+
+### Optimizers
+            monet_generator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
+            photo_generator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
+
+            monet_discriminator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
+            photo_discriminator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
 
 
 ## Discussion
