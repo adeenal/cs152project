@@ -31,7 +31,7 @@ To gain insight on a more general application of conditional adversarial network
 
 ## Methods
 ### Dataset and Model Brief
-In this project, we plan to use Tensorflow and base our experiment on both Kaggle notebook (with TPU V3-8 as an accelerator) and Google Colab (with GPU as an accelerator), which allow us to compare and evaluate the runtime performance of our project. 
+In this project, we plan to use [Tensorflow](https://www.tensorflow.org/overview) and base our experiment on both [Kaggle](https://www.kaggle.com/competitions/gan-getting-started) notebook (with TPU V3-8 as an accelerator) and Google Colab (with GPU as an accelerator), which allow us to compare and evaluate the runtime performance of our project. 
 
 Our dataset, provided by Kaggle, consists of four parts:
 1. _monet_jpg_ - 300 Monet paintings sized 256x256 in JPEG format
