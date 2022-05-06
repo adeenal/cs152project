@@ -31,7 +31,7 @@ To gain insight on a more general application of conditional adversarial network
 
 ## Methods
 ### Dataset and Model Brief
-In this project, we plan to use [Tensorflow](https://www.tensorflow.org/overview) and base our experiment on both [Kaggle](https://www.kaggle.com/code/sadiezhao/cs152-project-we-are-all-monet) notebook (with TPU V3-8 as an accelerator) and [Google Colab](https://colab.research.google.com/drive/1T4toYtvzIO9qrv5ADEuP1bMjeeMviAhT?usp=sharing) (with GPU as an accelerator), which allow us to compare and evaluate the runtime performance of our project. We ran the smae code on both platforms mainly because Kaggle Notebooks requires user to queue for TPU (sometimes people need to queue for 1-2 hours to acess the TPU). Therefore, we wish to also ran our experiment on other platforms, and in the meantime, see how our model perform without TPU. 
+In this project, we plan to use [Tensorflow](https://www.tensorflow.org/overview) and base our experiment on both [Kaggle](https://www.kaggle.com/code/sadiezhao/cs152-project-we-are-all-monet) notebook (with TPU V3-8 as an accelerator) and [Google Colab](https://colab.research.google.com/drive/1T4toYtvzIO9qrv5ADEuP1bMjeeMviAhT?usp=sharing) (with GPU as an accelerator), which allow us to compare and evaluate the runtime performance of our project. We ran the smae code on both platforms mainly because Kaggle Notebooks requires user to queue for TPU (sometimes people need to queue for 1-2 hours to acess the TPU). Therefore, we wish to also ran our experiment on other platforms, and, in the meantime, see how our model perform without TPU. 
 
 Our dataset, provided by Kaggle, consists of four parts:
 1. _monet_jpg_ - 300 Monet paintings sized 256x256 in JPEG format
@@ -41,7 +41,7 @@ Our dataset, provided by Kaggle, consists of four parts:
 
 The _monet_tfrec_ and _monet_jpg_ directories contain the same painting images, and the _photo_tfrec_ and _photo_jpg_ directories contain the same photos. In our experiment, we load and process the data from _monet_tfrec_ and _photo_tfrec_ to create our dataset: we decode the tfrec file to jpeg file, resize all the files to three channel image of size [256, 256, 3], and zip all of them to a dataset. 
 
-It is important to note that the input training data are not pair images. That is, for each monet image provided, there is no corresponding photo image; and for each real photo image, there is no corresponding monet image. The difference between paired and unpaired image inputs are shown in below image. 
+It is important to note that the input training data are not pair images. That is, for each monet image provided, there is no corresponding photo image; and for each real photo image, there is no corresponding monet image. The differences between paired and unpaired image inputs are shown in the below image. 
 
 | ![paired_image_input](img/unpaired_img_translation.jfif) | 
 |:--:| 
@@ -51,6 +51,9 @@ The unpaired nature of our  training data promotes us to employ the Cycle-Consis
 
 After the CycleGAN model is trained for 50 epochs, we use the trained model to make predictions: for each photo in the photo dataset, we take it as an input and output a Monet version of that photo. 
 
+---
+
+Before reading the following sections, we recommend to read the Discussion section (More about CycleGAN) first :)
 ### Loss Functions
 - For the **generator_loss**, we use the _BinaryCrossentropy_ as their loss function. _BinaryCrossentropy_ is a typical loss function that computes the cross-entropy loss between true labels and predicted labels. **generator_loss** is based on the results from corresponding discriminator. 
 - For the **discriminator_loss**, we first compute the loss of real inputs and then compute the loss of generated input, both using the _BinaryCrossentropy_. This discriminator loss is the average of the real and generated loss.
@@ -58,15 +61,202 @@ After the CycleGAN model is trained for 50 epochs, we use the trained model to m
 - Finally, we defined the **identity loss** which compares the image with its generator. That is, for example, take a real_monet image, put it into a monet_generator, and compare the real_monet with the generated fake_monet.
 
 ### Optimizers
+```python
             monet_generator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
             photo_generator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
 
             monet_discriminator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
             photo_discriminator_optimizer = optimizers.Adam(2e-4, beta_1=0.5)
+```
 
 ### Generator and Discriminator Basics
+<details>
+  <summary> Detailed information of monet generator (Click Me!) </summary> 
+  
+  ```python
+  ______________________________________________________________
+   Layer (type)                Output Shape              Param #   
+  =================================================================
+   input_image (InputLayer)    [(None, 256, 256, 3)]     0         
+
+   sequential_30 (Sequential)  (None, 128, 128, 64)      3072      
+
+   sequential_31 (Sequential)  (None, 64, 64, 128)       131328    
+
+   sequential_32 (Sequential)  (None, 32, 32, 256)       524800    
+
+   zero_padding2d (ZeroPadding  (None, 34, 34, 256)      0         
+   2D)                                                             
+
+   conv2d_113 (Conv2D)         (None, 31, 31, 512)       2097152   
+
+   instance_normalization_30 (  (None, 31, 31, 512)      1024      
+   InstanceNormalization)                                          
+
+   leaky_re_lu_19 (LeakyReLU)  (None, 31, 31, 512)       0         
+
+   zero_padding2d_1 (ZeroPaddi  (None, 33, 33, 512)      0         
+   ng2D)                                                           
+
+   conv2d_114 (Conv2D)         (None, 30, 30, 1)         8193      
+
+  =================================================================
+  Total params: 2,765,569
+  Trainable params: 2,765,569
+  Non-trainable params: 0
+  ```
+</details>
+
+<details>
+  <summary> Detailed information of monet_discriminator (Click Me!) </summary>
+  
+  ```python
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_image (InputLayer)    [(None, 256, 256, 3)]     0         
+                                                                 
+ sequential_30 (Sequential)  (None, 128, 128, 64)      3072      
+                                                                 
+ sequential_31 (Sequential)  (None, 64, 64, 128)       131328    
+                                                                 
+ sequential_32 (Sequential)  (None, 32, 32, 256)       524800    
+                                                                 
+ zero_padding2d (ZeroPadding  (None, 34, 34, 256)      0         
+ 2D)                                                             
+                                                                 
+ conv2d_113 (Conv2D)         (None, 31, 31, 512)       2097152   
+                                                                 
+ instance_normalization_30 (  (None, 31, 31, 512)      1024      
+ InstanceNormalization)                                          
+                                                                 
+ leaky_re_lu_19 (LeakyReLU)  (None, 31, 31, 512)       0         
+                                                                 
+ zero_padding2d_1 (ZeroPaddi  (None, 33, 33, 512)      0         
+ ng2D)                                                           
+                                                                 
+ conv2d_114 (Conv2D)         (None, 30, 30, 1)         8193      
+                                                                 
+=================================================================
+Total params: 2,765,569
+Trainable params: 2,765,569
+Non-trainable params: 0
+  ```
+</details>
+
+<details>
+  <summary> Detailed information of photo_generator (Click Me!)</summary> 
+  
+  ```python
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_3 (InputLayer)           [(None, 256, 256, 3  0           []                               
+                                )]                                                                
+                                                                                                  
+ sequential_15 (Sequential)     (None, 128, 128, 64  3072        ['input_3[0][0]']                
+                                )                                                                 
+                                                                                                  
+ sequential_16 (Sequential)     (None, 64, 64, 128)  131328      ['sequential_15[0][0]']          
+                                                                                                  
+ sequential_17 (Sequential)     (None, 32, 32, 256)  524800      ['sequential_16[0][0]']          
+                                                                                                  
+ sequential_18 (Sequential)     (None, 16, 16, 512)  2098176     ['sequential_17[0][0]']          
+                                                                                                  
+ sequential_19 (Sequential)     (None, 8, 8, 512)    4195328     ['sequential_18[0][0]']          
+                                                                                                  
+ sequential_20 (Sequential)     (None, 4, 4, 512)    4195328     ['sequential_19[0][0]']          
+                                                                                                  
+ sequential_21 (Sequential)     (None, 2, 2, 512)    4195328     ['sequential_20[0][0]']          
+                                                                                                  
+ sequential_22 (Sequential)     (None, 1, 1, 512)    4195328     ['sequential_21[0][0]']          
+                                                                                                  
+ sequential_23 (Sequential)     (None, 2, 2, 512)    4195328     ['sequential_22[0][0]']          
+                                                                                                  
+ concatenate_9 (Concatenate)    (None, 2, 2, 1024)   0           ['sequential_23[0][0]',          
+                                                                  'sequential_21[0][0]']          
+                                                                                                  
+ sequential_24 (Sequential)     (None, 4, 4, 512)    8389632     ['concatenate_9[0][0]']          
+                                                                                                  
+ concatenate_10 (Concatenate)   (None, 4, 4, 1024)   0           ['sequential_24[0][0]',          
+                                                                  'sequential_20[0][0]']          
+                                                                                                  
+ sequential_25 (Sequential)     (None, 8, 8, 512)    8389632     ['concatenate_10[0][0]']         
+                                                                                                  
+ concatenate_11 (Concatenate)   (None, 8, 8, 1024)   0           ['sequential_25[0][0]',          
+                                                                  'sequential_19[0][0]']          
+                                                                                                  
+ sequential_26 (Sequential)     (None, 16, 16, 512)  8389632     ['concatenate_11[0][0]']         
+                                                                                                  
+ concatenate_12 (Concatenate)   (None, 16, 16, 1024  0           ['sequential_26[0][0]',          
+                                )                                 'sequential_18[0][0]']          
+                                                                                                  
+ sequential_27 (Sequential)     (None, 32, 32, 256)  4194816     ['concatenate_12[0][0]']         
+                                                                                                  
+ concatenate_13 (Concatenate)   (None, 32, 32, 512)  0           ['sequential_27[0][0]',          
+                                                                  'sequential_17[0][0]']          
+                                                                                                  
+ sequential_28 (Sequential)     (None, 64, 64, 128)  1048832     ['concatenate_13[0][0]']         
+                                                                                                  
+ concatenate_14 (Concatenate)   (None, 64, 64, 256)  0           ['sequential_28[0][0]',          
+                                                                  'sequential_16[0][0]']          
+                                                                                                  
+ sequential_29 (Sequential)     (None, 128, 128, 64  262272      ['concatenate_14[0][0]']         
+                                )                                                                 
+                                                                                                  
+ concatenate_15 (Concatenate)   (None, 128, 128, 12  0           ['sequential_29[0][0]',          
+                                8)                                'sequential_15[0][0]']          
+                                                                                                  
+ conv2d_transpose_15 (Conv2DTra  (None, 256, 256, 3)  6147       ['concatenate_15[0][0]']         
+ nspose)                                                                                          
+                                                                                                  
+==================================================================================================
+Total params: 54,414,979
+Trainable params: 54,414,979
+Non-trainable params: 0
+  ```
+</details>
+
+<details>
+  <summary> Detailed information of photo_discriminator (Click Me!) </summary> 
+  
+  ```python
+_________________________________________________________________
+ Layer (type)                Output Shape              Param #   
+=================================================================
+ input_image (InputLayer)    [(None, 256, 256, 3)]     0         
+                                                                 
+ sequential_33 (Sequential)  (None, 128, 128, 64)      3072      
+                                                                 
+ sequential_34 (Sequential)  (None, 64, 64, 128)       131328    
+                                                                 
+ sequential_35 (Sequential)  (None, 32, 32, 256)       524800    
+                                                                 
+ zero_padding2d_2 (ZeroPaddi  (None, 34, 34, 256)      0         
+ ng2D)                                                           
+                                                                 
+ conv2d_118 (Conv2D)         (None, 31, 31, 512)       2097152   
+                                                                 
+ instance_normalization_33 (  (None, 31, 31, 512)      1024      
+ InstanceNormalization)                                          
+                                                                 
+ leaky_re_lu_23 (LeakyReLU)  (None, 31, 31, 512)       0         
+                                                                 
+ zero_padding2d_3 (ZeroPaddi  (None, 33, 33, 512)      0         
+ ng2D)                                                           
+                                                                 
+ conv2d_119 (Conv2D)         (None, 30, 30, 1)         8193      
+                                                                 
+=================================================================
+Total params: 2,765,569
+Trainable params: 2,765,569
+Non-trainable params: 0
+  ```
+</details>
+
 
 ## Discussion
+In this project, we grabbed the dataset from Kaggle and coded everything from scratch, including loading the data, configuring the optimizers, creating the convolutional generators and discriminators, building the CycleGAN model, and finally training the model. All of our work can be seen in 
 ### Runtime Performance
 First, we will discuss the runtime performance of our model. We first ran our experiment for 50 epochs on Kaggle notebook (with TPU V3-8 as an accelerator), and the performance is satisfying overall. It takes 142s to train the first epoch and around 33s for the remaining epochs. We also ran our experiment on Google Colab (with GPU as an accelerator). However, due to the limited RAM (limit of 25.46GB), we were not able to run 50 epochs but run 40 epochs instead. It takes 96s to train the first epoch and around 67s for the remaining epochs. This reveals one weakness of our model: it requires an extremely huge amount of RAM which is not always available. So one next thing we can improve would be to reduce the RAM demands. 
 
@@ -101,16 +291,16 @@ The CycleGAN is an extension of the GAN architecture that involves the simultane
 | *Simplified view of CycleGAN Architecture from [Understanding and Implementing CycleGAN in TensorFlow](https://hardikbansal.github.io/CycleGANBlog/)* |
 
 The above image is a simple illustration of a CycleGAN architecture where **collection 1** is the collection of horses images and **collection 2** is the collection of zebra images. Moreover, 
-1. Generator Model 1 (__Generator A2B__):
+1. Generator Model 1 (_Generator A2B_):
 - Input: Take real horse images.
 - Output: Generate fake zebra images.
-2. Discriminator Model 1 (__Discriminator A__):
+2. Discriminator Model 1 (_Discriminator A_):
 - Input: Takes real zebra images and fake zebra images generated by Generator Model 1.
 - Output: Likelihood of a sample is a real zebra image.
-3. Generator Model 2 (__Generator B2A__):
+3. Generator Model 2 (_Generator B2A_):
 - Input: Take real zebra images.
 - Output: Generate fake horse images.
-4. Discriminator Model 2 (__Discriminator B__):
+4. Discriminator Model 2 (_Discriminator B_):
 - Input: Takes real horse images and fake horse images generated by Generator Model 2.
 - Output: Likelihood of a sample is a real horse image.
 
@@ -134,10 +324,11 @@ and we have similar results for the model trained in Kaggle Notebook.
 ---
 
 ### Dealing with image arguments
+_*Since the model perform similarly on both platforms, we only ran this experiment on [Google Colab](https://colab.research.google.com/drive/1T4toYtvzIO9qrv5ADEuP1bMjeeMviAhT?usp=sharing)_
 
 We can see that for some input photos, our model effectively generates a Monet style version of the input. However, it is also notable that some output still contains a lot of features that do not fit Monet style. Observing the inputs and their corresponding outputs, we realized that the effectiveness of the model is largely affected by the traits of the original input photo, including image brightness, saturation, contrast. Therefore, if we could manually process these arguments (for example, add more variability during the training process to avoid extreme cases), we expect to see better results. In fact, we have written some scripts for processing these arguments. Unfortunately, due to time limitations, we may not be able to finish the experiment, but it would definitely be a good topic to explore for future work. 
 
-
+```python
      with strategy.scope():
          def DiffAugment(x, policy='', channels_first=False):
              if policy:
@@ -176,7 +367,7 @@ We can see that for some input photos, our model effectively generates a Monet s
 
          def aug_fn(image):
              return DiffAugment(image,"color")
-
+```
 
 
 
