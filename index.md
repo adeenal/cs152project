@@ -70,8 +70,7 @@ Before reading the following sections, we recommend to read the Discussion secti
 ```
 
 ### Generator and Discriminator Basics
-<details>
-  <summary> Detailed information of monet generator (Click Me!) </summary> 
+Detailed information of _monet_generator_
   
   ```python
   ______________________________________________________________
@@ -105,10 +104,8 @@ Before reading the following sections, we recommend to read the Discussion secti
   Trainable params: 2,765,569
   Non-trainable params: 0
   ```
-</details>
 
-<details>
-  <summary> Detailed information of monet_discriminator (Click Me!) </summary>
+Detailed information of _monet_discriminator_
   
   ```python
 _________________________________________________________________
@@ -142,10 +139,7 @@ Total params: 2,765,569
 Trainable params: 2,765,569
 Non-trainable params: 0
   ```
-</details>
-
-<details>
-  <summary> Detailed information of photo_generator (Click Me!)</summary> 
+Detailed information of _photo_generator_
   
   ```python
 __________________________________________________________________________________________________
@@ -215,10 +209,8 @@ Total params: 54,414,979
 Trainable params: 54,414,979
 Non-trainable params: 0
   ```
-</details>
-
-<details>
-  <summary> Detailed information of photo_discriminator (Click Me!) </summary> 
+  
+Detailed information of _photo_discriminator_
   
   ```python
 _________________________________________________________________
@@ -252,7 +244,6 @@ Total params: 2,765,569
 Trainable params: 2,765,569
 Non-trainable params: 0
   ```
-</details>
 
 
 ## Discussion
