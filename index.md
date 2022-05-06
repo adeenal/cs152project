@@ -49,7 +49,7 @@ It is important to note that the input training data are not pair images. That i
 
 The unpaired nature of our  training data promotes us to employ the Cycle-Consistent Adversarial Networks (CycleGAN). CycleGAN is a recently-developed approach “for learning to translate an image from a source domain X to a target domain Y in the absence of paired examples”. Traditional image-to-image translation solution based on Conditional Adversarial Networks depends on the availability of training examples where the same data is available in both domains. That is, say f: X->Y is a map from a source domain X to a target domain Y. Then, the training sample for Conditional Adversarial Networks based image-to-image translation model should looks like (x, f(x)) pair. However, CycleGAN eliminated the need for a paired image by making a two-step transformation of the source domain image - first by trying to map it to the target domain and then back to the original image. (More details of CycleGAN will be discussed in discussion section)
 
-After the CycleGAN model is trained for 50 epochs, we use the trained model to make predictions: for each photo in the photo dataset, we take it as an input and output a Monet version of that photo. 
+After the CycleGAN model is trained for 40 epochs, we use the trained model to make predictions: for each photo in the photo dataset, we take it as an input and output a Monet version of that photo. 
 
 ---
 
@@ -293,14 +293,10 @@ The above image is a simple illustration of a CycleGAN architecture where **coll
 
 In our case, **collection 1** is the collection of real photos and **collection 2** is the collection of Monet images. We call the Generator Model 1 the _monet_generator_, the Generator Model 2 the _photo_generator_, the Discriminator Model 1 the _photo_discriminator_, and the Discriminator Model 2 the _monet_discriminator_. 
 
-### Runtime Performance
-Then, we can briefly discuss the runtime performance of our model. We first ran our experiment for 50 epochs on Kaggle notebook (with TPU V3-8 as an accelerator), and the performance is satisfying overall. It takes 142s to train the first epoch and around 33s for the remaining epochs. We also ran our experiment on Google Colab (with GPU as an accelerator). However, due to the limited RAM (limit of 25.46GB), we were not able to run 50 epochs but run 40 epochs instead. It takes 96s to train the first epoch and around 67s for the remaining epochs. 
-This reveals one weakness of our model: it requires an extremely huge amount of RAM which is not always available. This is mainly becuase that RAM in neural networks is required to store input data, weight parameters and activations as an input propagates through the network. In training, activations from a forward pass must be retained until they can be used to calculate the error gradients in the backwards pass. Our model contains four huge generators and discriminators, and they require a huge amount of space to store the weights and activations during the training. 
-So one next thing we can improve would be to reduce the RAM demands.
 
 
 ### Main Experimental Results
-Finally, we will reveal some of our predictions from the trained _monet_generator_:
+Then, we will reveal some of our predictions from the trained _monet_generator_:
 
 | ![prediction_kaggle](img/prediction_kaggle.png) | ![prediction_colab](img/prediction_colab.png) |
 |:--: | :--: |
