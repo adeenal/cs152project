@@ -89,36 +89,72 @@ In this model, we used four kinds of loss functions.
 Detailed information of _monet_generator_
   
   ```python
-  ______________________________________________________________
-   Layer (type)                Output Shape              Param #   
-  =================================================================
-   input_image (InputLayer)    [(None, 256, 256, 3)]     0         
+__________________________________________________________________________________________________
+ Layer (type)                   Output Shape         Param #     Connected to                     
+==================================================================================================
+ input_2 (InputLayer)           [(None, 256, 256, 3  0           []                               
+                                )]                                                                
 
-   sequential_30 (Sequential)  (None, 128, 128, 64)      3072      
+ sequential (Sequential)        (None, 128, 128, 64  3072        ['input_2[0][0]']                
+                                )                                                                 
 
-   sequential_31 (Sequential)  (None, 64, 64, 128)       131328    
+ sequential_1 (Sequential)      (None, 64, 64, 128)  131328      ['sequential[0][0]']             
 
-   sequential_32 (Sequential)  (None, 32, 32, 256)       524800    
+ sequential_2 (Sequential)      (None, 32, 32, 256)  524800      ['sequential_1[0][0]']           
 
-   zero_padding2d (ZeroPadding  (None, 34, 34, 256)      0         
-   2D)                                                             
+ sequential_3 (Sequential)      (None, 16, 16, 512)  2098176     ['sequential_2[0][0]']           
 
-   conv2d_113 (Conv2D)         (None, 31, 31, 512)       2097152   
+ sequential_4 (Sequential)      (None, 8, 8, 512)    4195328     ['sequential_3[0][0]']           
 
-   instance_normalization_30 (  (None, 31, 31, 512)      1024      
-   InstanceNormalization)                                          
+ sequential_5 (Sequential)      (None, 4, 4, 512)    4195328     ['sequential_4[0][0]']           
 
-   leaky_re_lu_19 (LeakyReLU)  (None, 31, 31, 512)       0         
+ sequential_6 (Sequential)      (None, 2, 2, 512)    4195328     ['sequential_5[0][0]']           
 
-   zero_padding2d_1 (ZeroPaddi  (None, 33, 33, 512)      0         
-   ng2D)                                                           
+ sequential_7 (Sequential)      (None, 1, 1, 512)    4195328     ['sequential_6[0][0]']           
 
-   conv2d_114 (Conv2D)         (None, 30, 30, 1)         8193      
+ sequential_8 (Sequential)      (None, 2, 2, 512)    4195328     ['sequential_7[0][0]']           
 
-  =================================================================
-  Total params: 2,765,569
-  Trainable params: 2,765,569
-  Non-trainable params: 0
+ concatenate_2 (Concatenate)    (None, 2, 2, 1024)   0           ['sequential_8[0][0]',           
+                                                                  'sequential_6[0][0]']           
+
+ sequential_9 (Sequential)      (None, 4, 4, 512)    8389632     ['concatenate_2[0][0]']          
+
+ concatenate_3 (Concatenate)    (None, 4, 4, 1024)   0           ['sequential_9[0][0]',           
+                                                                  'sequential_5[0][0]']           
+
+ sequential_10 (Sequential)     (None, 8, 8, 512)    8389632     ['concatenate_3[0][0]']          
+
+ concatenate_4 (Concatenate)    (None, 8, 8, 1024)   0           ['sequential_10[0][0]',          
+                                                                  'sequential_4[0][0]']           
+
+ sequential_11 (Sequential)     (None, 16, 16, 512)  8389632     ['concatenate_4[0][0]']          
+
+ concatenate_5 (Concatenate)    (None, 16, 16, 1024  0           ['sequential_11[0][0]',          
+                                )                                 'sequential_3[0][0]']           
+
+ sequential_12 (Sequential)     (None, 32, 32, 256)  4194816     ['concatenate_5[0][0]']          
+
+ concatenate_6 (Concatenate)    (None, 32, 32, 512)  0           ['sequential_12[0][0]',          
+                                                                  'sequential_2[0][0]']           
+
+ sequential_13 (Sequential)     (None, 64, 64, 128)  1048832     ['concatenate_6[0][0]']          
+
+ concatenate_7 (Concatenate)    (None, 64, 64, 256)  0           ['sequential_13[0][0]',          
+                                                                  'sequential_1[0][0]']           
+
+ sequential_14 (Sequential)     (None, 128, 128, 64  262272      ['concatenate_7[0][0]']          
+                                )                                                                 
+
+ concatenate_8 (Concatenate)    (None, 128, 128, 12  0           ['sequential_14[0][0]',          
+                                8)                                'sequential[0][0]']             
+
+ conv2d_transpose_7 (Conv2DTran  (None, 256, 256, 3)  6147       ['concatenate_8[0][0]']          
+ spose)                                                                                           
+
+==================================================================================================
+Total params: 54,414,979
+Trainable params: 54,414,979
+Non-trainable params: 0
   ```
 
 Detailed information of _monet_discriminator_
