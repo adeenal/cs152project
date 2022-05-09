@@ -80,7 +80,9 @@ The **Downsample**, as the name suggests, reduces the 2D dimensions, the width a
 
 **Upsample** does the opposite of downsample and increases the dimensions of the of the image. It uses Conv2DTranspose which does basically the opposite of a Conv2D layer. Our generator first downsamples the input image and then upsample, and we concatenate the output of the downsample layer to the upsample layer in a symmetrical fashion. For the discriminator, however, we just need a simple downsampling. 
 
-For the activiation, we used the _LeakyReLU_, which has become a best practice when developing deep convolutional neural networks generally. Moreover, instead of using batch normalizer, we used the instance normalizer. 
+For the activiation, we used the _LeakyReLU_, which has become a best practice when developing deep convolutional neural networks generally. 
+
+Moreover, instead of using batch normalization, we used the instance normalization. 
 
 
 1. Detailed information of _monet_generator_
