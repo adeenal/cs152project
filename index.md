@@ -74,18 +74,19 @@ In this model, we used four kinds of loss functions.
 ```
 
 ### Generator and Discriminator Basics
-Two build the Generators and Discriminators, we used the technique of **Upsample** and **Downsample** that is comonly used in implementation of Deep Convolutional GAN(DCGAN). Details of DCGAN can be seen in [this research paper](https://arxiv.org/abs/1511.06434) and [this article](https://machinelearningmastery.com/how-to-code-generative-adversarial-network-hacks/), and our implementation of **Upsample** and **Downsample** can be found in our notebooks. 
+1. Two build the Generators and Discriminators, we used the technique of **Upsample** and **Downsample** that is commonly used in implementation of Deep Convolutional GAN(DCGAN). Details of DCGAN can be seen in [this research paper](https://arxiv.org/abs/1511.06434) and [this article](https://machinelearningmastery.com/how-to-code-generative-adversarial-network-hacks/), and our implementation of **Upsample** and **Downsample** can be found in our notebooks. 
 
-The **Downsample**, as the name suggests, reduces the 2D dimensions, the width and height, of the image by the stride. It uses the Conv2D layer where the stride is the length of the step the filter takes; since we use the stride 2, the filter is applied to every other pixel, hence reducing the weight and height by 2. 
+ - The **Downsample**, as the name suggests, reduces the 2D dimensions, the width and height, of the image by the stride. It uses the Conv2D layer where the stride is the length of the step the filter takes; since we use the stride 2, the filter is applied to every other pixel, hence reducing the weight and height by 2. 
+ - **Upsample** does the opposite of downsample and increases the dimensions of the of the image. It uses Conv2DTranspose which does basically the opposite of a Conv2D layer. 
+ - Our generator first downsamples the input image and then upsample, and we concatenate the output of the downsample layer to the upsample layer in a symmetrical fashion. 
+ - For the discriminator, however, we just need a simple downsampling. 
 
-**Upsample** does the opposite of downsample and increases the dimensions of the of the image. It uses Conv2DTranspose which does basically the opposite of a Conv2D layer. Our generator first downsamples the input image and then upsample, and we concatenate the output of the downsample layer to the upsample layer in a symmetrical fashion. For the discriminator, however, we just need a simple downsampling. 
+2. For the activiation, we used the _LeakyReLU_, which has become a best practice when developing deep convolutional neural networks generally. 
 
-For the activiation, we used the _LeakyReLU_, which has become a best practice when developing deep convolutional neural networks generally. 
-
-Moreover, instead of using batch normalization, we used the instance normalization. 
+3. Moreover, instead of using batch normalization, we used the instance normalization. 
 
 
-1. Detailed information of _monet_generator_
+Detailed information of _monet_generator_
   
   ```python
   ______________________________________________________________
@@ -120,7 +121,7 @@ Moreover, instead of using batch normalization, we used the instance normalizati
   Non-trainable params: 0
   ```
 
-2. Detailed information of _monet_discriminator_
+Detailed information of _monet_discriminator_
   
   ```python
 _________________________________________________________________
@@ -154,7 +155,7 @@ Total params: 2,765,569
 Trainable params: 2,765,569
 Non-trainable params: 0
   ```
-3. Detailed information of _photo_generator_
+Detailed information of _photo_generator_
   
   ```python
 __________________________________________________________________________________________________
@@ -225,7 +226,7 @@ Trainable params: 54,414,979
 Non-trainable params: 0
   ```
   
-4. Detailed information of _photo_discriminator_
+Detailed information of _photo_discriminator_
   
   ```python
 _________________________________________________________________
@@ -318,6 +319,7 @@ Then, we will reveal some of our predictions from the trained _monet_generator_:
 | Images on the left reveal predictions from the model trained in Google Colab| Images on the right reveal predictions from the model trained in Kaggle Notebook| 
 
  The losses are not as interesting as the output, but here is what we have for training the model for 40 epoches:
+ 
  | ![losses](img/losses.png) |
 |:--: |
 | Losses of the CycleGAN model trained in Google Colab|
