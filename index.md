@@ -74,7 +74,7 @@ In this model, we used four kinds of loss functions.
 ```
 
 ### Generator and Discriminator Basics
-1. Two build the Generators and Discriminators, we used the technique of **Upsample** and **Downsample** that is commonly used in implementation of Deep Convolutional GAN(DCGAN). Details of DCGAN can be seen in [this research paper](https://arxiv.org/abs/1511.06434) and [this article](https://machinelearningmastery.com/how-to-code-generative-adversarial-network-hacks/), and our implementation of **Upsample** and **Downsample** can be found in our notebooks. 
+1. To build the Generators and Discriminators, we used the technique of **Upsample** and **Downsample** that is commonly used in implementation of Deep Convolutional GAN(DCGAN). Details of DCGAN can be seen in [this research paper](https://arxiv.org/abs/1511.06434) and [this article](https://machinelearningmastery.com/how-to-code-generative-adversarial-network-hacks/), and our implementation of **Upsample** and **Downsample** can be found in our notebooks. 
 
  - The **Downsample**, as the name suggests, reduces the 2D dimensions, the width and height, of the image by the stride. It uses the Conv2D layer where the stride is the length of the step the filter takes; since we use the stride 2, the filter is applied to every other pixel, hence reducing the weight and height by 2. 
  - **Upsample** does the opposite of downsample and increases the dimensions of the of the image. It uses Conv2DTranspose which does basically the opposite of a Conv2D layer. 
@@ -444,6 +444,14 @@ In this project, we've studied how to accomplish complicated image-to-image tran
 3. Next time, we would start coding earlier, so that we could have more time exploring and improving the final results. Ideally, we also would have been able to try to run our model on the server. Unfortunately, the server ran out of disk space, but had we had the chance to use the server, we would have liked to run our model for more epochs, and see if the losses decrease any further.
 
 ## Gradio Application
+
+ | ![gradiogif](img/gradio_gif.gif) |
+ | ![graio1](img/gradio1.png) | 
+ | ![graio2](img/gradio2.png) |
+ | ![graio3](img/gradio3.png) |
+ |:--: |
+ | Gradio Demo of our model|
+ 
 
 ## Citations
 1. [Goodfellow, Ian J., et al. “Generative Adversarial Nets.” 10 June 2014.](https://arxiv.org/pdf/1406.2661.pdf) 
