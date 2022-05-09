@@ -6,6 +6,9 @@
 + Irmak Bukey
 + Olina Wong
 
+## Abstract
+AI-generated artwork has captured the public’s imaginations in recent years. While there are many ways to train AIs to do art, making AIs to imitate styles of great human artists would definitely be an intuitive and effective approach. However, training the machine to learn the style of existing artists is an image-to-image translation problem in absence of paired image input, which was poorly studied and nearly unsolvable until the development of the CycleGAN architecture. This paper provides a detailed explanation, with code implementation, of how CycleGAN enables machines to transfer any photos to Monet style. In addition to the CycleGAN framework, we employed techniques from Deep Convolutional GAN (DCGAN) and traditional image processing and showed how they effectively help to achieve our goal. 
+
 ## Introduction
 Writers have their unique prose, musicians have their unique vibe, and no differently, artists have their own unique style that are recognisable in their works throughout their lives. With the development of generative adversarial networks, we can utilise neural networks to imitate any particular style of a specific artist. 
 
