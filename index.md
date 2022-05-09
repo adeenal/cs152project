@@ -54,7 +54,11 @@ After the CycleGAN model is trained for 40 epochs, we use the trained model to m
 ---
 
 Before reading the following sections, we recommend to read the Discussion section (More about CycleGAN) first :)
+
+---
+
 ### Loss Functions
+In this model, we used four kinds of loss functions. 
 - For the **generator_loss**, we use the _BinaryCrossentropy_ as their loss function. _BinaryCrossentropy_ is a typical loss function that computes the cross-entropy loss between true labels and predicted labels. **generator_loss** is based on the results from corresponding discriminator. 
 - For the **discriminator_loss**, we first compute the loss of real inputs and then compute the loss of generated input, both using the _BinaryCrossentropy_. This discriminator loss is the average of the real and generated loss.
 - We also defined the **cycle consistency loss** which measures if original photo and the twice transformed photo to be similar to one another. That is, for example, take a real_monet image, put it into a photo_generator to generate a fake_photo, and put this fake_photo into a monet_generator to produce a fake_monet. The **cycle consistency loss** meassures the difference between real_monet and fake_monet.
@@ -70,7 +74,16 @@ Before reading the following sections, we recommend to read the Discussion secti
 ```
 
 ### Generator and Discriminator Basics
-Detailed information of _monet_generator_
+Two build the Generators and Discriminators, we used the technique of **Upsample** and **Downsample** that is comonly used in implementation of Deep Convolutional GAN(DCGAN). Details of DCGAN can be seen in [this research paper](https://arxiv.org/abs/1511.06434) and [this article](https://machinelearningmastery.com/how-to-code-generative-adversarial-network-hacks/), and our implementation of **Upsample** and **Downsample** can be found in our notebooks. 
+
+The **Downsample**, as the name suggests, reduces the 2D dimensions, the width and height, of the image by the stride. It uses the Conv2D layer where the stride is the length of the step the filter takes; since we use the stride 2, the filter is applied to every other pixel, hence reducing the weight and height by 2. 
+
+**Upsample** does the opposite of downsample and increases the dimensions of the of the image. It uses Conv2DTranspose which does basically the opposite of a Conv2D layer. Our generator first downsamples the input image and then upsample, and we concatenate the output of the downsample layer to the upsample layer in a symmetrical fashion. For the discriminator, however, we just need a simple downsampling. 
+
+For the activiation, we used the _LeakyReLU_, which has become a best practice when developing deep convolutional neural networks generally. Moreover, instead of using batch normalizer, we used the instance normalizer. 
+
+
+1. Detailed information of _monet_generator_
   
   ```python
   ______________________________________________________________
@@ -105,7 +118,7 @@ Detailed information of _monet_generator_
   Non-trainable params: 0
   ```
 
-Detailed information of _monet_discriminator_
+2. Detailed information of _monet_discriminator_
   
   ```python
 _________________________________________________________________
@@ -139,7 +152,7 @@ Total params: 2,765,569
 Trainable params: 2,765,569
 Non-trainable params: 0
   ```
-Detailed information of _photo_generator_
+3. Detailed information of _photo_generator_
   
   ```python
 __________________________________________________________________________________________________
@@ -210,7 +223,7 @@ Trainable params: 54,414,979
 Non-trainable params: 0
   ```
   
-Detailed information of _photo_discriminator_
+4. Detailed information of _photo_discriminator_
   
   ```python
 _________________________________________________________________
@@ -247,7 +260,7 @@ Non-trainable params: 0
 
 
 ## Discussion
-In this project, we grabbed the dataset from Kaggle and coded everything from scratch, including loading the data, configuring the optimizers, creating the convolutional generators and discriminators, building the CycleGAN model, and finally training the model. All of our work can be seen in [Kaggle](https://www.kaggle.com/code/sadiezhao/cs152-project-we-are-all-monet) notebook (and [Google Colab notebook](https://colab.research.google.com/drive/1T4toYtvzIO9qrv5ADEuP1bMjeeMviAhT?usp=sharing). Though we did experiment on different parameters, our main purpose is not investigating the optimal parameters for our model. Instead, we focus more on learning the idea of CycleGAN, understanding its relationship with tranditional GANs, build a CycleGAN by ourselves, and display it through Gradio application. In fact, compared to the well-crafted CycleGAN model presented in [the original CycleGAN paper](https://arxiv.org/pdf/1703.10593.pdf), our model is very unrefined and poorly-trained. However, building the model from nothing is challenging enough, and we did try to improve it in different ways.
+In this project, we grabbed the dataset from Kaggle and coded everything from scratch, including loading the data, configuring the optimizers, creating the convolutional generators and discriminators, building the CycleGAN model, and finally training the model. All of our work can be seen in [Kaggle notebook](https://www.kaggle.com/code/sadiezhao/cs152-project-we-are-all-monet) and [Google Colab notebook](https://colab.research.google.com/drive/1T4toYtvzIO9qrv5ADEuP1bMjeeMviAhT?usp=sharing). Though we did experiment on different parameters, our main purpose is not investigating the optimal parameters for our model. Instead, we focus more on learning the idea of CycleGAN, understanding its relationship with tranditional GANs, build a CycleGAN by ourselves, and display it through Gradio application. In fact, compared to the well-crafted CycleGAN model presented in [the original CycleGAN paper](https://arxiv.org/pdf/1703.10593.pdf), our model is very unrefined and poorly-trained. However, building the model from nothing is challenging enough, and we did try to improve it in different ways.
 
 ### More about CycleGAN
 First, we will provide more details of our CycleGAN model for audience to understand. The GAN model architecture involves two sub-models: a generator model for generating new examples and a discriminator model for classifying whether generated examples are real (from the domain) or fake(generated by the generator model). 
@@ -302,12 +315,13 @@ Then, we will reveal some of our predictions from the trained _monet_generator_:
 |:--: | :--: |
 | Images on the left reveal predictions from the model trained in Google Colab| Images on the right reveal predictions from the model trained in Kaggle Notebook| 
 
- The losses are not as interesting as the output, but after training 40 epochs on Google Colab, we do have  
+ The losses are not as interesting as the output, but here is what we have for training the model for 40 epoches:
+ | ![losses](img/losses.png) |
+|:--: |
+| Losses of the CycleGAN model trained in Google Colab|
 
-        monet_gen_loss: 2.5344 - photo_gen_loss: 2.3645 - monet_disc_loss: 0.7147 - photo_disc_loss: 0.9003 - total_cycle_loss: 1.4389, 
-        
-and we have similar results for the model trained in Kaggle Notebook. 
-
+ We can see that the losses are not converging as well as other models we used to see, especially the generator losses and discriminator losses. This makes sense as GANs are notoriously hard to converge as the Discriminator and Generator in a GAN training scheme work one against the other. That is, as the generator gets better with next epochs, the discriminator performs worse because the discriminator can’t easily tell the difference between a real and a fake one. Therefore, though the losses are not converging very well, it doesn't mean that our model didn't learn anything. Instead, from our generated images, we can say our model did learn a lot about how to accomplish its job. 
+ 
 ---
 
 ### Dealing with image arguments
@@ -396,3 +410,4 @@ In this project, we've studied how to accomplish complicated image-to-image tran
 2. [Isola, Phillip, et al. “Image-to-Image Translation with Conditional Adversarial Networks.” 2017 IEEE Conference on Computer Vision and Pattern Recognition (CVPR), 26 Nov. 2018.](https://arxiv.org/pdf/1703.10593.pdf)
 3. [Pang, Yingxue, et al. “Image-to-Image Translation: Methods and Applications.” IEEE Transactions on Multimedia, 3 July 2021.](https://arxiv.org/pdf/1611.07004.pdf)
 4. [Zhu, Jun-Yan, et al. “Unpaired Image-to-Image Translation Using Cycle-Consistent Adversarial Networks.” 2017 IEEE International Conference on Computer Vision (ICCV), 24 Aug. 2020. ](https://arxiv.org/pdf/2101.08629.pdf)
+5. [Radford, Alec et al. “Unsupervised Representation Learning with Deep Convolutional Generative Adversarial Networks.” CoRR abs/1511.06434 (2016): n. pag.](https://arxiv.org/abs/1511.06434)
